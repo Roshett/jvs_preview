@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link
+      rel="stylesheet"
+      href="./libs/bootstrap.css"
+    />
+  </head>
+  <body>
+    <div class="container">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="input-group mb-3">
+            <input
+              type="text"
+              class="form-control"
+              placeholder="hash for image"
+              aria-label="hash for image"
+              aria-describedby="button-addon2"
+              value="fsadbtr3234324"
+              id="hashInput"
+            />
+            <div class="input-group-append">
+              <button
+                class="btn btn-outline-secondary"
+                type="button"
+                id="button-addon2"
+                onclick="generateHash()"
+              >
+                Сгенерировать хеш
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <form runat="server">
+            <input accept="image/*" type="file" id="imgInp" />
+          </form>
+        </div>
+        <div class="col-md-6">
+          <button onclick="encode()" type="button" class="btn btn-warning">
+            Encode
+          </button>
+          <button onclick="decode()" type="button" class="btn btn-success">
+            Decode
+          </button>
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-md-6">
+          <img id="myImage" src="#" alt="your image" width="100%" />
+        </div>
+        <div class="col-md-6">
+          <canvas id="myCanvas"></canvas>
+        </div>
+      </div>
+    </div>
+  </body>
+  <script type="module" src="./core.js"></script>
+  <script>
+    imgInp.onchange = (evt) => {
+      const [file] = imgInp.files;
+      if (file) {
+        myImage.src = URL.createObjectURL(file);
+      }
+    };
+
+    function drawCool() {
+      var c = document.getElementById('myCanvas');
+      var ctx = c.getContext('2d');
+      var img = document.getElementById('myImage');
+      ctx.canvas.width = img.naturalWidth;
+      ctx.canvas.height = img.naturalHeight;
+      ctx.drawImage(img, 0, 0);
+    }
+
+    function generateHash() {
+      const input = document.getElementById('hashInput');
+      input.value = makeHash(30);
+    }
+  </script>
+</html>
